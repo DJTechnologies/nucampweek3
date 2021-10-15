@@ -86,3 +86,8 @@ git remote add origin https://github.com/DJTechnologies/nucampweek3.git
         />
         <Footer />
       </div> main components
+
+campsites.js
+comments.js
+partners.js
+promotions.js

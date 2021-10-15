@@ -6,13 +6,20 @@ import { CAMPSITES } from "../shared/campsites";
 import Header from "./HeaderComponent";
 import Footer from "./FooterComponent";
 import Home from "./HomeComponent";
+import Contact from "./ContactComponent";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { COMMENTS } from "../shared/comments";
+import { PARTNERS } from "../shared/partners";
+import { PROMOTIONS } from "../shared/promotions";
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
       campsites: CAMPSITES,
+      comments: COMMENTS,
+      partners: PARTNERS,
+      promotions: PROMOTIONS,
     };
   }
 
@@ -22,31 +29,24 @@ class Main extends Component {
 
   render() {
     const HomePage = () => {
-      return <Home />;
+      return (
+        <Home
+          campsite={
+            this.state.campsites.filter((campsite) => campsite.featured)[0]
+          }
+          promotion={
+            this.state.promotions.filter((promotion) => promotion.featured)[0]
+          }
+          partner={this.state.partners.filter((partner) => partner.featured)[0]}
+        />
+      );
     };
     return (
-      //   <div>
-      //     <Navbar dark color="primary">
-      //       <div className="container">
-      //         <NavbarBrand href="/">NuCamp</NavbarBrand>
-      //       </div>
-      //     </Navbar>
-      //     <Directory
-      //       campsites={this.state.campsites}
-      //       onClick={(campsiteId) => this.onCampsiteSelect(campsiteId)}
-      //     />
-      //     <CampsiteInfo
-      //       campsite={
-      //         this.state.campsites.filter(
-      //           (campsite) => campsite.id === this.state.selectedCampsite
-      //         )[0]
-      //       }
-      //     />
-      //   </div>
       <div>
         <Header />
         <Switch>
           <Route path="/home" component={HomePage} />
+          <Route exact path="/contactus" component={Contact} />
           <Route
             exact
             path="/directory"
@@ -65,6 +65,7 @@ class Main extends Component {
             )[0]
           }
         />
+
         <Footer />
       </div>
     );
