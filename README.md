@@ -70,3 +70,19 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 git remote add origin https://github.com/DJTechnologies/nucampweek3.git
+
+ <div>
+        <Header />
+        <Directory
+          campsites={this.state.campsites}
+          onClick={(campsiteId) => this.onCampsiteSelect(campsiteId)}
+        />
+        <CampsiteInfo
+          campsite={
+            this.state.campsites.filter(
+              (campsite) => campsite.id === this.state.selectedCampsite
+            )[0]
+          }
+        />
+        <Footer />
+      </div> main components
