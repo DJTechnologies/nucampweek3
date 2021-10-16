@@ -71,64 +71,71 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 git remote add origin https://github.com/DJTechnologies/nucampweek3.git
 
- <div>
-        <Header />
-        <Directory
-          campsites={this.state.campsites}
-          onClick={(campsiteId) => this.onCampsiteSelect(campsiteId)}
-        />
-        <CampsiteInfo
-          campsite={
-            this.state.campsites.filter(
-              (campsite) => campsite.id === this.state.selectedCampsite
-            )[0]
-          }
-        />
-        <Footer />
-      </div> main components
-
-irectory
+compon.js
 
 import React, { Component } from "react";
-
-import CampsiteInfo from "./CampsiteInfoComponent";
-import { Card, CardImg, CardImgOverlay, CardTitle } from "reactstrap";
+import {
+Card,
+CardImg,
+CardText,
+CardBody,
+CardTitle,
+Breadcrumb,
+BreadcrumbItem,
+} from "reactstrap";
 import { Link } from "react-router-dom";
 
-class Directory extends Component {
-constructor(props) {
-super(props);
-this.state = {
-selectedCampsite: null,
-};
-}
-
-onCampsiteSelect(campsite) {
-this.setState({ selectedCampsite: campsite });
-}
-
-render() {
-const directory = this.props.campsites.map((campsite) => {
+class CampsiteInfo extends Component {
+renderCampsite(campsite) {
 return (
-<div key={campsite.id} className="col-md-5 m-1">
+<div className="col-md-5 m-1">
 <Card>
-<CardImg width="100%" src={campsite.image} alt={campsite.name} />
-<CardImgOverlay>
+<CardImg top src={campsite.image} alt={campsite.name} />
+<CardBody>
 <CardTitle>{campsite.name}</CardTitle>
-</CardImgOverlay>
+<CardText>{campsite.description}</CardText>
+</CardBody>
 </Card>
 </div>
 );
-});
+}
 
-    return (
-      <div className="container">
-        <div className="row">{directory}</div>
-        <CampsiteInfo campsite={this.state.selectedCampsite} />
-      </div>
-    );
-
+renderComments(comments) {
+if (comments) {
+return (
+<div className="col-md-5 m-1">
+<h4>Comments</h4>
+{comments.map((comments) => (
+<div className="p-1" key={comments.id}>
+{comments.text}
+<br></br>
+-- {comments.author},{" "}
+{new Intl.DateTimeFormat("en-US", {
+year: "numeric",
+month: "short",
+day: "2-digit",
+}).format(new Date(Date.parse(comments.date)))}
+</div>
+))}
+</div>
+);
+} else {
+return <div></div>;
 }
 }
 
-export default Directory;
+render() {
+if (this.props.campsite) {
+return (
+<div className="row">
+{this.renderCampsite(this.props.campsite)}
+{this.renderComments(this.props.comments)}
+</div>
+);
+} else {
+return <div></div>;
+}
+}
+}
+
+export default CampsiteInfo;
